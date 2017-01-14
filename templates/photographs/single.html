@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include 'partials/meta.jinja' %}
+</head>
+
+<body class='wide dark'>
+
+  {% include 'partials/header-minimal.jinja' %}
+
+  <main>
+
+    <img style='max-width: 100%; max-height: 900px' src='{{ page.image.large }}'/>
+
+
+    <p><em>{{ page.title }}</em></p>
+
+    <div style='display: flex; justify-content: space-between;'>
+      <div style='height: 4rem; display: inline-flex; flex-direction: column; justify-content: space-between;'>
+        <span>
+          <i class='octicon octicon-calendar'></i>
+          <time datetime='{{ page.date.strftime('%Y-%m-%d') }}'>
+            {{ page.date.strftime('%B %-d, %Y') }}
+          </time>
+        </span>
+
+        <span>
+          <i class='octicon octicon-location'></i>
+          {{ page.location }}
+        </span>
+      </div>
+
+      <div style='height: 4rem; display: inline-flex; flex-direction: column; justify-content: space-between;'>
+        <span>
+          <i class='octicon octicon-device-camera'></i>
+          {{ page.exif.camera }}
+          {% if page.exif.lens %}
+            with {{ page.exif.lens }}
+          {% endif %}
+        </span>
+
+        <span>
+          <i class='octicon octicon-gear'></i>
+          ƒ/{{ page.exif.aperture }} &mdash;
+          {{ page.exif.shutter_speed }}s &mdash;
+          ISO {{ page.exif.iso }}
+        </span>
+      </div>
+    </div>
+
+    <hr>
+
+    <!--
+    <div>
+      <i class='fa fa-calendar'></i>
+      <time datetime='{{ page.date.strftime('%Y-%m-%d') }}'>
+        {{ page.date.strftime('%B %-d, %Y') }}
+      </time>
+    </div>
+    <div>
+      <i class='fa fa-map-marker'></i>
+      {{ page.location }}
+    </div>
+    <div>
+      <i class='fa fa-camera-retro'></i>
+      {{ page.exif.camera }}
+      {% if page.exif.lens %}
+        with {{ page.exif.lens }}
+      {% endif %}
+    </div>
+
+    <div>
+      <i class='fa fa-cog'></i>
+      ƒ/{{ page.exif.aperture }}
+      {{ page.exif.shutter_speed }}s
+      ISO {{ page.exif.iso }}
+    </div>
+    -->
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<input id='primary-nav-toggle' type='checkbox'/>
+<label for='primary-nav-toggle'>
+  <i class='fa fa-bars'></i>
+</label>
+
+<nav class='primary'>
+  <a
+    {% if page.type == 'section' and page.url.startswith('/essays') %}
+      class='current'
+    {% endif %}
+    href='/essays'>
+      <span class='octicon octicon-light-bulb'></span>
+      Essays
+  </a>
+  <a
+    {% if page.type == 'section' and page.url.startswith('/photographs') %}
+      class='current'
+    {% endif %}
+    href='/photographs'>
+      <span class='octicon octicon-device-camera'></span>
+      Photographs
+  </a>
+  <a
+    {% if page.type == 'section' and page.url.startswith('/books') %}
+      class='current'
+    {% endif %}
+    href='/books'>
+      <span class='octicon octicon-book'></span>
+      Books
+  </a>
+  <a
+    {% if page.type == 'section' and page.url.startswith('/til') %}
+      class='current'
+    {% endif %}
+    href='/til'>
+      <span class='octicon octicon-mortar-board'></span>
+      Today I Learned
+  </a>
+  <a href='{{ site.author.github }}'>
+      <span class='octicon octicon-package'></span>
+      Software
+  </a>
+</nav>

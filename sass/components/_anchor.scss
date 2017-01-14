@@ -1,0 +1,31 @@
+@import 'base/constants';
+
+.anchorjs-link {
+  color: $accent-color;
+  transition: all .25s linear;
+
+  &:hover {
+    color: $accent-color-dark;
+  }
+}
+
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+}
+
+ol, ul {
+  .anchorjs-link {
+    margin-left: -2.5em !important;
+  }
+
+  *:hover > .anchorjs-link {
+    margin-left: -2.625em !important;
+  }
+}
+
+@media (max-width: $max-content-width + 80px) {
+  // don't display anchor links if there isn't enough room in the margin
+  .anchorjs-link {
+    visibility: hidden;
+  }
+}

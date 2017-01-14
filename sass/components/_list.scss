@@ -1,0 +1,23 @@
+%list {
+  margin: 1rem 0 1rem 2rem;
+  padding: 0;
+}
+
+%inner-ol { list-style: lower-alpha outside; }
+%inner-ul { list-style: square outside; }
+
+ul {
+  @extend %list;
+  list-style: circle outside;
+
+  ol { @extend %inner-ol; }
+  ul { @extend %inner-ul; }
+}
+
+ol {
+  @extend %list;
+  list-style: decimal outside;
+
+  ol { @extend %inner-ol; }
+  ul { @extend %inner-ul; }
+}

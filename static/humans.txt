@@ -1,0 +1,10 @@
+---
+---
+/* TEAM */
+Author: {{ site.author.name }}
+Site: {{ site.author.uri }}
+Location: {{ site.author.location }}
+
+
+/* SITE */
+Last update: {{ site.time | date: '%Y/%m/%d' }}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include 'partials/meta.jinja' %}
+  </head>
+
+  <body>
+
+    <!--
+    <header class='large'>
+    -->
+
+    <header class='minimal'>
+        <h6 id='title'><a href='/'>{{ site.name }}</a></h6>
+
+        {% include 'partials/navigation.jinja' %}
+
+        <input id='filter-nav-toggle' type='checkbox'/>
+        <label for='filter-nav-toggle'>
+          <i class='fa fa-filter'></i>
+        </label>
+
+        <menu class='filter' label='filter by topic'>
+          <span>Filter by topic:</span>
+          <a
+            {% if page.url.startswith('/essays/software') %}
+              class='current'
+              href='/essays'
+            {% else %}
+              href='/essays/software'
+            {% endif %}
+            >
+              Software
+          </a>
+
+          <a
+            {% if page.url.startswith('/essays/photography') %}
+              class='current'
+              href='/essays'
+            {% else %}
+              href='/essays/photography'
+            {% endif %}
+            >
+              Photography
+          </a>
+
+          <a
+            {% if page.url.startswith('/essays/travel') %}
+              class='current'
+              href='/essays'
+            {% else %}
+              href='/essays/travel'
+            {% endif %}
+            >
+              Travel
+          </a>
+
+          <a
+            {% if page.url.startswith('/essays/music') %}
+              class='current'
+              href='/essays'
+            {% else %}
+              href='/essays/music'
+            {% endif %}
+            >
+              Music
+          </a>
+
+          <a
+            {% if page.url.startswith('/essays/personal') %}
+              class='current'
+              href='/essays'
+            {% else %}
+              href='/essays/personal'
+            {% endif %}
+            >
+              Personal
+          </a>
+        </menu>
+
+        <script
+          data-no-instant
+          src='https://code.jquery.com/jquery-3.1.0.js'
+          integrity='sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk='
+          crossorigin='anonymous'>
+        </script>
+
+
+        <script>
+        $('#primary-nav-toggle').click(function() {
+          $('#filter-nav-toggle').prop('checked', false);
+        });
+
+        $('#filter-nav-toggle').click(function() {
+          $('#primary-nav-toggle').prop('checked', false);
+        });
+        </script>
+    </header>
+
+    <main>
+      <ul>
+        {% for page in paginator.pages %}
+          <li>
+            {% include 'essays/preview.jinja' %}
+          </li>
+        {% endfor %}
+      </ul>
+
+    </main>
+
+    <footer>
+      <nav class='pagination' role='pagination'>
+      {% if paginator.previous_page %}
+        <a id='previous-page' href='{{ paginator.previous_page_path }}'>&laquo; Newer</a>
+      {% endif %}
+
+      <span id='page-number'> Page {{ paginator.current_page }} of {{ paginator.total_pages }} </span>
+
+      {% if paginator.next_page %}
+        <a id='next-page' href='{{ paginator.next_page_path }}'>Older &raquo;</a>
+      {% endif %}
+      </nav>
+    </footer>
+
+  </body>
+</html>

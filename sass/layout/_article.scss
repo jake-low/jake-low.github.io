@@ -1,0 +1,12 @@
+@import 'base/constants';
+
+article {
+  .meta {
+    color: $secondary-text-color;
+  }
+
+  .footnotes {
+    border-top: 1px solid $line-color;
+    padding-top: 1em;
+  }
+}

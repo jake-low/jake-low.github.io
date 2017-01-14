@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include 'partials/meta.jinja' %}
+
+    <script src='/js/anchor.js'></script>
+
+    <link rel='author' href='#signature'/>
+    <link rel='copyright' href='#copyright'/>
+  </head>
+
+<body>
+  {% include 'partials/header-minimal.jinja' %}
+
+  <main>
+    <article>
+      <header>
+        <span class='meta'>
+          <time datetime='{{ page.date.strftime('%Y-%m-%d') }}'>
+              {{ page.date.strftime('%B %-d, %Y') }}
+          </time>
+
+          {% if page.section | length > 1 %}
+            &mdash; in {{ page.section[-1] | capitalize }}
+          {% endif %}
+        </span>
+
+        <h1>{{ page.title }}</h1>
+      </header>
+
+      <section class='content'>
+        {{ page.content }}
+      </section>
+
+      <footer>
+        {% include 'partials/signature.jinja' %}
+        {% include 'partials/license.jinja' %}
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    anchors.options.placement = 'left';
+
+    anchors.add('.content h1');
+    anchors.add('.content h2');
+    anchors.add('.content h3');
+    anchors.add('.content h4');
+    anchors.add('.content h5');
+    anchors.add('.content h6');
+
+    anchors.add('.footnotes li');
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<article>
+  <header>
+    <span class='meta'>
+      <time datetime='{{ page.date.strftime('%Y-%m-%d') }}'>
+          {{ page.date.strftime('%B %-d, %Y') }}
+      </time>
+
+      {% if page.section | length > 1 %}
+        &mdash; in {{ page.section[-1] | capitalize }}
+      {% endif %}
+    </span>
+
+    <h2><a href='{{ page.url }}'>{{ page.title }}</a></h2>
+  </header>
+
+  {{ page.excerpt }}
+
+  <a href='{{ page.url }}'>Read more &raquo;</a>
+</article>

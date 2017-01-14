@@ -1,0 +1,138 @@
+@import 'base/constants';
+
+nav, menu {
+
+  a {
+    text-decoration: none;
+  }
+
+  display: flex;
+  justify-content: space-between;
+
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+
+  font-size: 0.8rem;
+}
+
+nav {
+  a.current {
+    border-bottom: 1px solid $accent-color;
+    border-radius: 0;
+  }
+
+  margin: 1rem 0;
+}
+
+menu {
+  width: 80%;
+  padding: 1rem 10%;
+  margin: 0 auto;
+
+  a.current {
+    color: $accent-color;
+  }
+}
+
+//-------------------------
+.toggle {
+  display: none;
+
+  input[type=checkbox] {
+    position: absolute;
+    left: -9999px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  nav: 100%;
+
+  .toggle {
+    display: initial;
+  }
+}
+
+body > header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid $line-color;
+
+  menu {
+    border-top: 1px solid $line-color;
+  }
+
+  margin-bottom: 2rem;
+
+  nav {
+    width: 1150px * 0.6; // breakpoint: ~850px;
+    font-weight: 600;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  #title {
+    flex-grow: 1;
+  }
+
+  input[type=checkbox]#primary-nav-toggle,
+  input[type=checkbox]#filter-nav-toggle {
+    display: none;
+  }
+
+  label[for=primary-nav-toggle],
+  label[for=filter-nav-toggle] {
+    display: none;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 850px) {
+    .primary {
+      order: -999;
+    }
+
+    .filter {
+      order: 999;
+    }
+
+    nav, menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+
+      margin: 0;
+      width: 100%;
+
+      position: absolute;
+      top: -9999px;
+
+      & > * {
+        margin: 0.5rem 0;
+      }
+    }
+
+    nav {
+      border-bottom: 1px solid $line-color;
+    }
+
+    label[for=primary-nav-toggle],
+    label[for=filter-nav-toggle] {
+      display: initial;
+      width: 1.5rem;
+      text-align: center;
+    }
+
+    input[type=checkbox]#primary-nav-toggle:checked ~ .primary,
+    input[type=checkbox]#filter-nav-toggle:checked ~ .filter {
+      position: relative;
+      top: 0;
+    }
+  }
+}
