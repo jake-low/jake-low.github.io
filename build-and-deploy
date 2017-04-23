@@ -1,0 +1,7 @@
+#!/bin/sh
+
+python bilder
+
+rsync -avP --exclude .git/ --exclude content/ --exclude backup/ . root@159.203.143.1:jakelow.com/
+
+ssh root@159.203.143.1 'cd jakelow.com; docker-compose build; docker-compose up -d'

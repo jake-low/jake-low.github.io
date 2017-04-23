@@ -68,6 +68,11 @@ class SectionTarget(base.Target):
         self.pages = pages
         self.template = jinja_env.get_template(str(template.relative_to('templates')))
 
+        print(section.name, [page.title for page in pages])
+
+    def is_stale(self):
+        return True # FIXME can we do better?
+
     @property
     def path(self):
         page_number = self.paginator['current_page']

@@ -1,0 +1,37 @@
+version: '3'
+services:
+  haproxy:
+    image: dockercloud/haproxy
+    links:
+      - www.jakelow.com
+      #- fandf.jakelow.com
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  certbot:
+    image: quay.io/letsencrypt/letsencrypt:latest
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+    command: certonly
+
+  www.jakelow.com:
+    build: .
+    environment:
+      - VIRTUAL_HOST=http://www.jakelow.com, https://www.jakelow.com
+    expose:
+      - 80
+      - 443
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+
+  #fandf.jakelow.com:
+  #  image: dockercloud/hello-world
+  #  environment:
+  #    - VIRTUAL_HOST=fandf.jakelow.com
+
+volumes:
+  letsencrypt:
+    driver: local

@@ -1,2 +1,5 @@
+__pycache__/
+*.pyc
+
 .sass-cache/
 output/

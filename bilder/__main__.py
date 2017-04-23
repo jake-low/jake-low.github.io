@@ -46,6 +46,7 @@ for path in Path('static').glob('**/*'):
     else:
         target.parent.mkdir(parents=True, exist_ok=True)
 
+    print("Copying {}".format(str(path)))
     shutil.copy(str(path), str(target))
 
 # collect content
@@ -53,13 +54,15 @@ for path in Path('static').glob('**/*'):
 content_nodes = []
 
 for path in Path('content').glob('**/*.md'):
+    print("Creating MarkDown node {}".format(str(path)))
     content_nodes.append(content.MarkdownContentNode(path))
 
 # for path in Path('content').glob('**/*.html'):
 #     content_nodes.append(content.HTMLContentNode(path))
 #
-# for path in Path('content').glob('**/*.jpg'):
-#     content_nodes.append(content.JPEGContentNode(path))
+for path in Path('content').glob('**/*.jpg'):
+    print("Creating JPEG node {}".format(str(path)))
+    content_nodes.append(content.JPEGContentNode(path))
 
 # render content
 

@@ -53,10 +53,41 @@ sections:
   # when including it in the post. (TODO convert relative to absolute URLs
   # automatically when building the site).
 
+  # usability note: it should be illegal to include an 'index.md' or similar
+  # in a path which is labelled here as a section, as this would create two
+  # sources of truth on what /section should serve (one content, one template).
+
+  # alternate: 'index.md' or similar override templates (content is king)
+  # this would provide an easy way to make splash pages
+
   - path: essays
+
+    # in the simple case, only a single HTML page is generated for a section.
+    # however, with pagination turned on, a section /foo will be broken into
+    # multiple pages e.g. /foo/page/1, /foo/page/2, etc.
+
+    # if pagination is turned on, /foo will be created as a symlink to
+    # /foo/page/1, effectively redirecting visitors in a 'URL-invisible' way.
+
+    # TODO: how to generate splash pages (where /foo != /foo/page/1)?
+
     paginate: 5
+
+    # 'sort' dictates in which order the iterator for this section yields the
+    # content within it.
+
     sort: -date
+
     subsections:
+
+      # subsections are further divisions of the content in a section. they
+      # generate sub-directory URLs (such as /section/subsection), and can
+      # be configured exactly like sections (pagination, sort, etc.)
+
+      # subsections inherit their default configuration values from their
+      # parent sections. for brevity, a naked 'string' key is treated the same
+      # as 'path: string'
+
       - software
       - photography
       - travel
@@ -73,15 +104,26 @@ sections:
   # TODO: sections should have an order
 
 date:
+  # date is a special taxonomy; it knows how to parse ISO dates (2017-04-22) into
+  # heirarchical terms, and it can restrict the 'resolution'
+
+  # alternate idea: all taxonomies should have a 'resolution' (an int) since
+  # all taxonomies can have heirarchical keys. any ISO date in the YAML should
+  # be automatically converted to a heirarchy for the purpose of a taxonomy,
+  # so custom dates can be used (e.g. filter movies by release date -- not
+  # necessarily the same as the publish date for the content about them).
+
   url: /:date
   resolution: day
 
 
 taxonomies:
+
   # each key here is the name of a taxonomy. the name determines which key is
   # retrieved from frontmatter. the key's value can be a scalar or a list of
   # scalars (the latter means the content belongs to several terms in the
   # taxonomy).
+
   location:
     url: /:section/loc/:term
 

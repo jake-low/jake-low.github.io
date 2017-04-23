@@ -10,3 +10,21 @@ article {
     padding-top: 1em;
   }
 }
+
+@import 'components/list';
+
+section.image-metadata {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 2em;
+  box-sizing: border-box;
+
+  ul {
+    @extend %list;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    column-width: 20rem;
+  }
+}

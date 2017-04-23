@@ -22,7 +22,7 @@
       <section id='gallery'>
         {% for page in paginator.pages %}
           <a href='{{ page.url }}'>
-            <img src='{{ page.image.large }}'/>
+            <img src='{{ page.image.small }}'/>
           </a>
         {% endfor %}
       </section>
@@ -31,6 +31,12 @@
       $('#gallery').justifiedGallery({
         rowHeight: 360,
         justifyThreshold: 0.5,
+        sizeRangeSuffixes: {
+          600: '.small',
+          900: '.medium',
+          1400: '.large',
+          9999: '.fullsize',
+        }
       });
       </script>
     </main>

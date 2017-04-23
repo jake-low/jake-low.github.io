@@ -3,10 +3,14 @@ from pathlib import Path
 import datetime
 import markdown
 import json
+import os
 import subprocess
+import shutil
 import yaml
 
 import base
+
+from util import memoize
 
 import jinja2
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
@@ -37,7 +41,7 @@ class ContentTarget(base.Target):
         self.template = jinja_env.get_template(str(template.relative_to('templates')))
 
     def is_stale(self):
-        return True
+        return True # FIXME can we do better?
 
     @property
     def path(self):
@@ -147,28 +151,91 @@ class HTMLContentNode(TextContentNode):
     def content(self):
         return jinja_env.from_string(self.raw_content).render(site=self.config.data, page=self.data)
 
+class JPEGTarget(object):
+    # TODO should derive from base.Target, which currently isn't generic enough
+
+    ratios = {
+        'small': '600x600',
+        'medium': '900x900',
+        'large': '1400x1400',
+    }
+
+    def __init__(self, content, size):
+        self.content = content
+        self.size = size
+
+    def is_stale(self):
+        if self.path.exists():
+            if self.content.path.stat().st_mtime <= self.path.stat().st_mtime:
+                return False
+            else:
+                self.path.unlink()
+                return True
+        else:
+            return True
+
+
+
+    @property
+    def path(self):
+        relpath = self.content.path.relative_to('content')
+
+        if self.size != 'fullsize':
+            relpath = relpath.with_suffix('.{}.jpg'.format(self.size))
+
+        return Path('output') / relpath
+
+    @property
+    def url(self):
+        url = config.baseurl / self.path.relative_to('output')
+
+        if self.path.name == 'index.html':
+            return url.parent
+        else:
+            return url
+
+    @property
+    def slug(self):
+        return self.url.stem
+
+    def render(self):
+        if self.is_stale():
+
+            if self.size == 'fullsize':
+                shutil.copy(str(self.content.path), str(self.path))
+            else:
+                os.system('convert {source} -resize {size} {target}'.format(
+                    source=str(self.content.path), size=self.ratios[self.size],
+                    target=str(self.path)))
+
 
 class JPEGContentNode(ContentNode):
-    sizes = {
-        'small': '20%',
-        'medium': '30%',
-        'large': '50%',
-    }
+    sizes = ['small', 'medium', 'large', 'fullsize']
 
     def __init__(self, path):
         self.path = path
         self.section = str(path.relative_to('content').parent)
 
+    @property
+    @memoize
+    def frontmatter(self):
         cmd = 'exiftool -All -j {}'.format(self.path)
         output = subprocess.check_output(cmd.split(' '))
-        self.frontmatter = json.loads(output.decode('utf8'))[0]
+        return json.loads(output.decode('utf8'))[0]
+
+    def targets(self):
+        for target in super(JPEGContentNode, self).targets():
+            yield target
+
+        for size in self.sizes:
+            yield JPEGTarget(self, size)
 
     @property
     def images(self):
-        images = {size: self.target.with_suffix('.{}.jpg'.format(size))
+        images = {size: Path('/') / self.path.relative_to('content').with_suffix('.{}.jpg'.format(size))
             for size in self.sizes}
 
-        images['fullsize'] = self.target.with_suffix('.jpg')
+        images['fullsize'] = Path('/') / self.path.relative_to('content').with_suffix('.jpg')
 
         return images
 
@@ -230,30 +297,30 @@ class JPEGContentNode(ContentNode):
             'author': self.author,
             'date': self.date,
             'location': self.location,
-            'url': str(self.url),
-            'slug': self.slug,
-            'image': {name: str(Path('/') / path.relative_to('output')) for name, path in self.images.items()},
+            'url': str(list(self.targets())[0].url), # FIXME haaaack... what to do, content -> url is one-to-many
+            #'slug': self.slug,
+            'image': self.images,
             'exif': self.exif,
         }
 
-    def is_stale(self):
-        # FIXME oh shit, 'stale' should be on targets, not sources.
-        if not self.target.exists():
-            return True
-        else:
-            return self.path.stat().st_mtime > self.target.stat().st_mtime
-
-    def render(self):
-        was_stale = self.is_stale()
-
-        super(JPEGContent, self).render()
-
-        if was_stale:
-            shutil.copy(str(self.path), str(self.images['fullsize']))
-
-            for name, path in self.images.items():
-                if name != 'fullsize':
-                    os.system('convert {source} -resize {size} {target}'.format(
-                        source=str(self.path), size=self.sizes[name], target=str(path)))
-        else:
-            print("skipping resize for {} (not stale)".format(self.path))
+    # def is_stale(self):
+    #     # FIXME oh shit, 'stale' should be on targets, not sources.
+    #     if not self.target.exists():
+    #         return True
+    #     else:
+    #         return self.path.stat().st_mtime > self.target.stat().st_mtime
+    #
+    # def render(self):
+    #     was_stale = self.is_stale()
+    #
+    #     super(JPEGContent, self).render()
+    #
+    #     if was_stale:
+    #         shutil.copy(str(self.path), str(self.images['fullsize']))
+    #
+    #         for name, path in self.images.items():
+    #             if name != 'fullsize':
+    #                 os.system('convert {source} -resize {size} {target}'.format(
+    #                     source=str(self.path), size=self.sizes[name], target=str(path)))
+    #     else:
+    #         print("skipping resize for {} (not stale)".format(self.path))
