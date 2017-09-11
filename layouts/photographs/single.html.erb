@@ -11,8 +11,9 @@
   <main class='image-with-metadata'>
     <figure>
 
-      <img src='<%= @item.path(rep: :default) %>'/>
-
+      <img src='<%= @item.path(rep: :large) %>'
+        srcset='<%= @item.path(rep: :large_2x) %> 2x'
+        alt='<%# should alt really be blank? %>'/>
 
       <figcaption>
         <% if @item[:title] %>

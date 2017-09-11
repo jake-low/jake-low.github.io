@@ -1,7 +1,11 @@
-<a href='<%= @item.path(rep: :html) %>'
+<a href='<%= @item.path(rep: :default) %>'
   style='flex-basis: <%= @item[:aspect] * 300 %>px; flex-grow: <%= @item[:aspect] %>; flex-shrink: <%= @item[:aspect] %>'>
   <figure>
-    <img src='<%= @item.path(rep: :preview) %>'/>
+    <img src='<%= @item.path(rep: :preview) %>'
+      srcset='<%= @item.path(rep: :preview_2x) %> 2x'
+      alt='<%= @item[:location] %>'/>
+      <%# TODO alt should use caption + location, but not all images have captions %>
+
     <figcaption>
       <p><%= @item[:location] %></p>
     </figcaption>

@@ -106,19 +106,30 @@ compile '/photographs/page:*.html' do
 end
 
 compile '/photographs/*.jpg', rep: :default do
-  filter :convert, size: 'x1600', quality: 65
-  write item.identifier.without_ext + '.jpg'
-end
-
-compile '/photographs/*.jpg', rep: :preview do
-  filter :convert, size: 'x600', quality: 50
-  write item.identifier.without_ext + '.preview.jpg'
-end
-
-compile '/photographs/*.jpg', rep: :html do
+  # default means HTML page showing image and metadata
   filter :bin2txt # HACK
   layout '/photographs/single.*'
   write item.identifier.without_ext + '.html'
+end
+
+compile '/photographs/*.jpg', rep: :large_2x do
+  filter :convert, size: '3000x1600>', quality: 65
+  write item.identifier.without_ext + '.large@2x.jpg'
+end
+
+compile '/photographs/*.jpg', rep: :large do
+  filter :convert, size: '1500x800>', quality: 65
+  write item.identifier.without_ext + '.large.jpg'
+end
+
+compile '/photographs/*.jpg', rep: :preview_2x do
+  filter :convert, size: 'x800', quality: 50
+  write item.identifier.without_ext + '.preview@2x.jpg'
+end
+
+compile '/photographs/*.jpg', rep: :preview do
+  filter :convert, size: 'x400', quality: 50
+  write item.identifier.without_ext + '.preview.jpg'
 end
 
 compile '/assets/errors/*.html' do
