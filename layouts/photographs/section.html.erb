@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render '/partials/meta.erb' %>
+
+    <script
+      data-no-instant
+      src='https://code.jquery.com/jquery-3.1.0.js'
+      integrity='sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk='
+      crossorigin='anonymous'>
+    </script>
+
+    <link rel="stylesheet" href="/css/justifiedGallery.css" />
+    <script src="/js/justifiedGallery.js"></script>
+  </head>
+
+  <body class='wide dark'>
+
+    <%= render '/partials/header.erb' %>
+
+    <main>
+      <section id='gallery' class='gallery'>
+        <% @item[:items].each do |identifier| %>
+          <%= render '/photographs/preview.html.erb', :item => @items[identifier] %>
+        <% end %>
+      </section>
+
+      <script type='text/ecmascript'>
+      /*
+      $('#gallery').justifiedGallery({
+        rowHeight: 350,
+        justifyThreshold: 0.5
+        sizeRangeSuffixes: {
+          600: '.small',
+          900: '.medium',
+          1400: '.large',
+          9999: '.fullsize',
+        }
+      });
+      */
+      </script>
+    </main>
+
+    <footer>
+      <nav class='pagination' role='pagination'>
+        <span id='page-number'> Page <%= @item[:paginator][:current_page] %> of <%= @item[:paginator][:total_pages] %> </span>
+
+        <% if @item[:paginator][:previous_page] %>
+          <a id='previous-page' href='<%= @item[:paginator][:previous_page] %>'>&laquo; Newer</a>
+        <% end %>
+
+
+        <% if @item[:paginator][:next_page] %>
+          <a id='next-page' href='<%= @item[:paginator][:next_page] %>'>Older &raquo;</a>
+        <% end %>
+      </nav>
+    </footer>
+
+    <script src="/js/instantclick.js" data-no-instant></script>
+    <script data-no-instant>InstantClick.init();</script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+@import 'base/constants';
+
+%list {
+  margin-top: $base-line-height;
+  margin-left: 2rem;
+  margin-right: 0;
+  margin-bottom: $base-line-height;
+  padding: 0;
+}
+
+%inner {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+%inner-ol { @extend %inner; list-style: lower-alpha outside; }
+%inner-ul { @extend %inner; list-style: square outside; }
+
+ul {
+  @extend %list;
+  list-style: circle outside;
+
+  ol { @extend %inner-ol; }
+  ul { @extend %inner-ul; }
+}
+
+ol {
+  @extend %list;
+  list-style: decimal outside;
+
+  ol { @extend %inner-ol; }
+  ul { @extend %inner-ul; }
+}

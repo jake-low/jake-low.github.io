@@ -1,0 +1,150 @@
+#!/usr/bin/env ruby
+
+require 'find'
+require 'json'
+require 'pp'
+
+preprocess do
+  @items.each do |item|
+    if item.identifier.to_s =~ %r'/photographs/.*\.jpg'
+      item.attributes.merge! pretty_exif(item.identifier.to_s)
+
+    elsif item.identifier.to_s =~ %r'/essays/.*\.md'
+      item[:kind] = 'article'
+      item[:created_at] = item[:date]
+    end
+  end
+
+  sectionize_config = [
+    {
+      :root => 'essays',
+      :per_page => 5,
+      :sort_method => lambda {|a,b| b[:date] <=> a[:date]},
+    },
+    {
+      :root => 'photographs',
+      :per_page => 25,
+      :sort_method => lambda {|a,b| b[:date] <=> a[:date]},
+    },
+  ]
+
+  sectionize_config.each do |config|
+    sections = []
+    items_to_create = {}
+
+    Dir.chdir('content') do
+      Find.find(config[:root]) do |path|
+        sections << path if File.directory? path
+      end
+    end
+
+    sections.each do |section|
+      pages = @items.find_all("/#{section}/**/*")
+        .sort(&config[:sort_method])
+        .each_slice(config[:per_page])
+        .to_a
+
+      pages.each_with_index do |slice, index|
+        page_number = index + 1
+
+        identifier = "/#{section}/page:#{page_number}.html"
+        attributes = {
+          :title => section.capitalize,
+          :items => slice.map{|item| item.identifier.to_s},
+          :paginator => {
+            :current_page => page_number,
+            :total_pages => pages.length,
+            :previous_page => page_number == 1 ? nil : "/#{section}/page:#{page_number - 1}.html",
+            :next_page => page_number == pages.length ? nil : "/#{section}/page:#{page_number + 1}.html",
+          }
+        }
+
+        items_to_create[identifier] = attributes
+      end
+    end
+
+    items_to_create.each do |identifier, attributes|
+      @items.create("", attributes, identifier)
+    end
+  end
+end
+
+compile '/css/styles.scss' do
+  filter :sass, syntax: :scss, load_paths: ['./content/css']
+  write item.identifier.without_ext + '.css'
+end
+
+if @config[:features][:essays]
+  compile '/essays/page:*.html' do
+    filter :erb
+    layout '/essays/section.*'
+    write item.identifier.to_s
+  end
+
+  compile '/essays/**/*.md' do
+    filter :kramdown, :parse_block_html => true, :syntax_highlighter => 'rouge'
+    layout '/essays/single.*'
+    write ext: 'html'
+  end
+end
+
+# compile '/photographs/index.html' do
+#   filter :erb
+#   layout '/photographs/section.*'
+#   write item.identifier.to_s
+# end
+#
+# compile '/photographs/favorites.html' do
+#   filter :erb
+#   layout '/photographs/section.*'
+#   write item.identifier.to_s
+# end
+
+compile '/photographs/page:*.html' do
+  layout '/photographs/section.*'
+  write item.identifier.to_s
+end
+
+compile '/photographs/*.jpg', rep: :default do
+  filter :convert, size: 'x1600', quality: 65
+  write item.identifier.without_ext + '.jpg'
+end
+
+compile '/photographs/*.jpg', rep: :preview do
+  filter :convert, size: 'x600', quality: 50
+  write item.identifier.without_ext + '.preview.jpg'
+end
+
+compile '/photographs/*.jpg', rep: :html do
+  filter :bin2txt # HACK
+  layout '/photographs/single.*'
+  write item.identifier.without_ext + '.html'
+end
+
+compile '/assets/errors/*.html' do
+  layout '/assets/errors/single.*'
+  write item.identifier.to_s
+end
+
+compile '/**/*' do
+  write item.identifier.to_s
+end
+
+layout '/**/*', :erb
+
+# This is an example rule that matches Markdown (.md) files, and filters them
+# using the :kramdown filter. It is commented out by default, because kramdown
+# is not bundled with Nanoc or Ruby.
+#
+#compile '/**/*.md' do
+#  filter :kramdown
+#  layout '/default.*'
+#end
+#
+# route '/**/*.{html,md}' do
+#   if item.identifier =~ '/index.*'
+#     '/index.html'
+#   else
+#     item.identifier.without_ext + '/index.html'
+#   end
+# end

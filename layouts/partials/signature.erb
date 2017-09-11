@@ -1,0 +1,16 @@
+<% author = @item[:author] || @config[:author] %>
+
+<section id='signature'>
+  <h3>
+    Written by
+    <% if author[:keybase] %>
+      <a href='<%= author[:keybase] %>'>
+        <%= author[:name] %>
+        <i class='fa fa-key'></i>
+      </a>
+    <% else %>
+      <%= author[:name] %>
+    <% end %>
+  </h3>
+  <p><%= author[:bio] %></p>
+</section>

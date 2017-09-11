@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render '/partials/meta.erb' %>
+  </head>
+
+  <body>
+
+    <header class='minimal'>
+        <h6 id='title'><a href='/'><%= @config[:name] %></a></h6>
+
+        <%= render '/partials/navigation.erb' %>
+
+        <input id='filter-nav-toggle' type='checkbox'/>
+        <label for='filter-nav-toggle'>
+          <%= inline '/assets/icons/feather/filter.svg' %>
+        </label>
+
+        <menu class='filter' label='filter by topic'>
+          <span>Filter by topic:</span>
+          <a
+            <% if @item.path.start_with? '/essays/software' %>
+              class='current'
+              href='/essays'
+            <% else %>
+              href='/essays/software'
+            <% end %>
+            >
+              Software
+          </a>
+
+          <a
+            <% if @item.path.start_with? '/essays/photography' %>
+              class='current'
+              href='/essays'
+            <% else %>
+              href='/essays/photography'
+            <% end %>
+            >
+              Photography
+          </a>
+
+          <a
+            <% if @item.path.start_with? '/essays/travel' %>
+              class='current'
+              href='/essays'
+            <% else %>
+              href='/essays/travel'
+            <% end %>
+            >
+              Travel
+          </a>
+
+          <a
+            <% if @item.path.start_with? '/essays/language' %>
+              class='current'
+              href='/essays'
+            <% else %>
+              href='/essays/language'
+            <% end %>
+            >
+              Language
+          </a>
+
+          <a
+            <% if @item.path.start_with? '/essays/personal' %>
+              class='current'
+              href='/essays'
+            <% else %>
+              href='/essays/personal'
+            <% end %>
+            >
+              Personal
+          </a>
+        </menu>
+
+    </header>
+
+    <main>
+      <% @item[:items].each do |identifier| %>
+        <%= render '/essays/preview.html.erb', :item => @items[identifier] %>
+      <% end %>
+    </main>
+
+    <footer>
+      <nav class='pagination' role='pagination'>
+        <span id='page-number'> Page <%= @item[:paginator][:current_page] %> of <%= @item[:paginator][:total_pages] %> </span>
+
+        <% if @item[:paginator][:previous_page] %>
+          <a id='previous-page' href='<%= @item[:paginator][:previous_page] %>'>&laquo; Newer</a>
+        <% end %>
+
+
+        <% if @item[:paginator][:next_page] %>
+          <a id='next-page' href='<%= @item[:paginator][:next_page] %>'>Older &raquo;</a>
+        <% end %>
+      </nav>
+    </footer>
+
+    <script src="/js/instantclick.js" data-no-instant></script>
+    <script data-no-instant>InstantClick.init();</script>
+  </body>
+</html>

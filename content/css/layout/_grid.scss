@@ -1,0 +1,43 @@
+@import 'base/constants';
+
+body {
+  display: grid;
+  grid-gap: $base-line-height;
+  grid-template-columns:
+    [full-start wide-start left-start] minmax(0, 1fr)
+    [left-end main-start] minmax(0, 85ch) [main-end right-start]
+    minmax(0, 1fr) [right-end wide-end full-end];
+
+  /*
+  @media (min-width: $wide-enough) {
+    grid-template-columns:
+      [full-start] minmax(0, 1fr)
+      [left-start wide-start] minmax(0, 2fr)
+      [left-end main-start] minmax(0, 960px) [main-end right-start]
+      minmax(0, 2fr) [right-end wide-end]
+      minmax(0, 1fr) [full-end];
+  }
+  */
+
+  &.wide {
+    // gallery layout uses this
+    grid-template-columns:
+      [full-start wide-start left-start] minmax(0, 1fr)
+      [left-end main-start] minmax(0, 160ch) [main-end right-start]
+      minmax(0, 1fr) [right-end wide-end full-end];
+  }
+
+  & > * {
+    grid-column: full;
+  }
+}
+
+* {
+  grid-template: inherit;
+  grid-gap: inherit;
+}
+
+%subgrid {
+  display: grid;
+  grid-column: full;
+}

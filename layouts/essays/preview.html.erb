@@ -1,0 +1,20 @@
+<article class='essay preview'>
+  <header>
+    <h2><a href='<%= @item.path %>'><%= @item[:title] %></a></h2>
+    <span class='meta'>
+      <time datetime='<%= @item[:date].strftime '%Y-%m-%d' %>'>
+          <%= @item[:date].strftime '%B %-d, %Y' %>
+      </time>
+
+      <% if false %>
+      <% if page.section | length > 1 %>
+        &mdash; in <%= page.section[-1] | capitalize %>
+      <% end %>
+      <% end %>
+    </span>
+  </header>
+
+  <%= excerpt @item %>
+
+  <a href='<%= @item.path %>'>Read more &raquo;</a>
+</article>

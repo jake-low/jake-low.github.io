@@ -1,0 +1,29 @@
+@import 'base/constants';
+@import 'layout/grid';
+
+body {
+  header, footer {
+    grid-column: main;
+  }
+
+  main {
+    @extend %subgrid;
+  }
+}
+
+article.preview + article.preview {
+  border-top: 1px solid $line-color;
+  padding-top: $base-line-height;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  a {
+    color: $default-text-color;
+  }
+}
+
+// FIXME wrong file
+
+figure {
+  margin: 0;
+}

@@ -1,0 +1,101 @@
+@import 'base/constants';
+@import 'layout/grid';
+
+article.essay {
+
+  @extend %subgrid;
+
+  position: relative;
+
+  & > * {
+    grid-column: main;
+  }
+
+  header {
+    display: flex;
+    align-items: baseline;
+
+    h1, h2, h3, h4, h5, h6 {
+      flex-grow: 1;
+    }
+
+    .meta {
+      color: $secondary-text-color;
+    }
+  }
+
+  .footnotes {
+    border-top: 1px solid $line-color;
+    padding-top: 1em;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 80vh;
+  }
+
+  figure {
+    grid-column: full;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  figure > img {
+    //grid-column: full;
+  }
+
+  figcaption {
+    //grid-column: main;
+
+    font-size: small;
+    font-style: italic;
+    text-align: center;
+    line-height: 1.5;
+    padding: 1em 2em;
+
+    color: $secondary-text-color;
+  }
+
+  figure:target {
+    position: fixed;
+    max-width: none;
+    width: 100vw !important;
+    height: 100vh !important;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    background: black;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    figcaption {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #eee;
+      padding: 0.5em 0.75em;
+      line-height: 1.5em;
+
+    }
+  }
+
+  * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &.preview {
+    & > * {
+      grid-column: main;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<a href='<%= @item.path(rep: :html) %>'
+  style='flex-basis: <%= @item[:aspect] * 300 %>px; flex-grow: <%= @item[:aspect] %>; flex-shrink: <%= @item[:aspect] %>'>
+  <figure>
+    <img src='<%= @item.path(rep: :preview) %>'/>
+    <figcaption>
+      <p><%= @item[:location] %></p>
+    </figcaption>
+  </figure>
+</a>

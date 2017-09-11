@@ -1,6 +1,0 @@
-#!/bin/sh
-
-docker service update proxy --publish-rm 81:80 --publish-rm 444:443
-docker kill jakelowcom_www.jakelow.com_1
-docker service update proxy --publish-add 80:80 --publish-rm 443:443
-docker service update --force jakelow

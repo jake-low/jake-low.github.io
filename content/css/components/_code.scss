@@ -1,0 +1,296 @@
+// Config -----------------------------------
+$syntax-hue:          230;
+$syntax-saturation:    1%;
+$syntax-brightness:   99%;
+
+// Monochrome -----------------------------------
+$mono-1: hsl($syntax-hue, 8%, 20%);
+$mono-2: hsl($syntax-hue, 6%, 40%);
+$mono-3: hsl($syntax-hue, 4%, 60%);
+
+// Colors -----------------------------------
+$cyan:   hsl(198, 99%, 37%); // <-cyan
+$blue:   hsl(221, 87%, 60%); // <-blue
+$purple:   hsl(301, 63%, 40%); // <-purple
+$green:   hsl(119, 34%, 47%); // <-green
+
+$orange:   hsl(5, 74%, 59%); // <-red 1
+$plum: hsl(344, 84%, 43%); // <-red 2
+
+$bronze:   hsl(41, 99%, 30%); // <-orange 1
+$gold: hsl(41, 99%, 38%); // <-orange 2
+
+
+// Base colors -----------------------------------
+$syntax-fg:     $mono-1;
+$syntax-bg:     hsl($syntax-hue, $syntax-saturation, $syntax-brightness);
+$syntax-gutter: darken($syntax-bg, 36%);
+$syntax-guide:  fade($syntax-fg, 20%);
+$syntax-accent: hsl($syntax-hue, 100%, 66%);
+
+pre {
+  width: 100%;
+}
+
+code {
+  padding: .1rem .3rem;
+  margin: 0 .1rem;
+  font-size: 90%;
+
+  white-space: nowrap;
+  overflow: scroll;
+
+  background: $syntax-bg;
+  border: 1px solid darken($syntax-bg, 10%);
+  border-radius: 4px;
+}
+
+pre > code {
+  display: block;
+  padding: .5rem .75rem;
+  white-space: pre;
+
+  font-size: 0.6rem;
+
+  @media #{$larger-than-phablet} {
+    font-size: 0.9rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+
+.highlight {
+  table td { padding: 5px; }
+  table pre { margin: 0; }
+
+  .s, .ss, .sb, .sc, .sd, .se, .sh, .si, .s1, .s2, .sr, .sx {
+    // string literals
+    color: $green;
+  }
+
+  .c, .c1, .cm, .cs, .cd { // comments
+    color: $mono-3;
+    font-style: italic;
+  }
+
+  .bp { color: $orange; } // self/this
+  .k { color: $purple; } // keywords
+  .nc { color: $gold; } // class names
+  .nf { color: $blue; } // function names
+  .nb { color: $cyan; } // builtin names
+  .mh, .mi, .mf, .mo { color: $bronze; } // hex, int, float, octal
+  .kn { color: $purple; } // include/import?
+  .cp { color: $purple; } // c preprocessor
+  .kt { color: $plum; } // builtin types
+}
+
+/*
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: $purple;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k {
+  color: $purple;
+}
+.highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: $green;
+}
+.highlight .n {
+  color: $syntax-fg;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: $orange;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: $blue;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: $syntax-fg;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+*/

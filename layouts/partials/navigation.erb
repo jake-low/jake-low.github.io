@@ -1,0 +1,29 @@
+<input id='primary-nav-toggle' type='checkbox'/>
+<label for='primary-nav-toggle'>
+  <%= inline '/assets/icons/feather/menu.svg' %>
+</label>
+
+<nav class='primary'>
+  <% if @config[:features][:essays] %>
+  <a
+    <% if @item.identifier.to_s.start_with? '/essays' %>
+      class='current'
+    <% end %>
+    href='/essays'>
+      <%= inline '/assets/icons/feather/feather.svg' %>
+      Essays
+  </a>
+  <% end %>
+  <a
+    <% if @item.identifier.to_s.start_with? '/photographs' %>
+      class='current'
+    <% end %>
+    href='/photographs'>
+      <%= inline '/assets/icons/feather/aperture.svg' %>
+      Photographs
+  </a>
+  <a href='<%= @config[:author][:github] %>'>
+      <%= inline '/assets/icons/feather/package.svg' %>
+      Software
+  </a>
+</nav>

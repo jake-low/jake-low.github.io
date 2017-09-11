@@ -1,0 +1,58 @@
+<section id='copyright'>
+  <% if not @item[:license] %>
+    <p>Copyright <%= @item[:date].strftime('%Y') %></p>
+    <p>All rights reserved</p>
+  <% else %>
+
+    <% license = @item[:license].upcase %>
+
+    <% if license == 'PUBLIC DOMAIN' %>
+      <svg aria-hidden>
+        <use xlink:href='/assets/icons.svg#licenses/cc/publicdomain'></use>
+      </svg>
+
+      <p>This work is in the Public Domain</p>
+
+    <% elsif license == 'CC0' %>
+      <svg aria-hidden>
+        <use xlink:href='/assets/icons.svg#licenses/cc/zero'></use>
+      </svg>
+
+      <p>
+        Dedicated to the Public Domain via
+        <a rel='license' href='https://creativecommons.org/publicdomain/zero/1.0/'>
+          <%= @item[:license] %>
+        </a>
+      </p>
+
+    <% elsif license.start_with? 'CC' %>
+      <% cc_components = license.split(' ') %>
+      <% cc_variant = cc_components[1].downcase.split('-') %>
+      <% cc_version = cc_components[-1] %>
+
+      <h3 aria-hidden>
+
+        <svg>
+          <use xlink:href='/assets/icons.svg#licenses/cc/cc'></use>
+        </svg>
+
+        <% for term in cc_variant %>
+          <svg>
+            <use xlink:href='/assets/icons.svg#licenses/cc/<%=term%>'></use>
+          </svg>
+        <% end %>
+
+      </h3>
+
+      <p>
+        Licensed under
+        <a rel='license' href='https://creativecommons.org/licenses/<%= cc_variant.join("-") %>/<%= cc_version %>/'>
+          <%= @item[:license] %>
+        </a>
+      </p>
+
+    <% else %>
+      ERROR: Unknown license <%= @item[:license] %>, <%= license.start_with? 'CC' %>
+    <% end %>
+  <% end %>
+</section>

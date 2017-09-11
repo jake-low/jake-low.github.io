@@ -1,0 +1,38 @@
+
+$larger-than-mobile: "only screen and (min-width: 400px)";
+$larger-than-phablet: "only screen and (min-width: 550px)";
+$larger-than-tablet: "only screen and (min-width: 750px)";
+
+$default-text-color: #333;
+$secondary-text-color: #aaa;
+
+$accent-color: #1eaedb;
+$accent-color-dark: #0fa0ce;
+
+$line-color: #aaa;
+
+$max-content-width: 850px;
+
+$base-font-size: 1rem;
+//$base-line-height: 1.7rem;
+$base-line-height: 26px; // FIXME uses px because Baseliner doesn't _quite_ align when non-integer px amounts are used.
+// FIXME also I haven't really considered what the ideal line height is; 28px is just approx. (or 26, or whatever)
+
+/*
+
+// Larger than mobile
+@media (min-width: 400px) {}
+
+// Larger than phablet (also point when grid becomes active)
+@media (min-width: 550px) {}
+
+// Larger than tablet
+@media (min-width: 750px) {}
+
+// Larger than desktop
+@media (min-width: 1000px) {}
+
+// Larger than Desktop HD
+@media (min-width: 1200px) {}
+
+*/

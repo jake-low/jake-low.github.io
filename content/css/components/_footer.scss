@@ -1,0 +1,40 @@
+@import 'base/constants';
+
+footer {
+  border-top: 1px solid $line-color;
+  padding: 1rem 0;
+
+  a {
+    text-decoration: none;
+  }
+
+  /*
+  nav {
+    height: 2.5rem;
+    line-height: 2.5rem;
+    margin: 1em 0;
+  }
+  */
+
+  display: flex;
+  justify-content: space-between;
+
+  #signature, #copyright {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    color: $secondary-text-color;
+  }
+
+  #copyright {
+    text-align: right;
+
+    svg {
+      vertical-align: middle;
+
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+}

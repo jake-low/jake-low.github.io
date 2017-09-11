@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render '/partials/meta.erb' %>
+
+    <script src='/js/anchor.js'></script>
+
+    <link rel='author' href='#signature'/>
+    <link rel='copyright' href='#copyright'/>
+  </head>
+
+<body>
+  <%= render '/partials/header.erb' %>
+
+  <main>
+    <article class='essay'>
+      <header>
+        <h1><%= @item[:title] %></h1>
+
+        <span class='meta'>
+          <time datetime='<%= @item[:date].strftime('%Y-%m-%d') %>'>
+              <%= @item[:date].strftime('%B %-d, %Y') %>
+          </time>
+
+          <% if false %>
+          <% if meta.section | length > 1 %>
+            &mdash; in <%= meta.section[-1] | capitalize %>
+          <% end %>
+          <% end %>
+        </span>
+      </header>
+
+      <%= yield %>
+
+      <footer>
+        <%= render '/partials/signature.erb' %>
+        <%= render '/partials/license.erb' %>
+      </footer>
+    </article>
+
+    <!-- comments would go here, each in their own article -->
+    <article class='comment'>
+      <header>
+        <time>Nov 21, 2017 &ndash; 8:31 PM</time>
+        <p>Joe Bloggs</p>
+      </header>
+
+      <p>Hello from Boston!</p>
+    </article>
+
+  </main>
+
+  <!--
+  <script src="http://files.keyes.ie/things/baseliner/baseliner-latest.min.js"></script>
+  <script>
+    window.onload = function() {
+        var pLineHeight = window.getComputedStyle(document.getElementsByTagName('p')[0], null).getPropertyValue("line-height")
+        console.log("base leading:", pLineHeight);
+
+        baseliner = new Baseliner({
+          gridHeight: parseFloat(pLineHeight),
+          gridSpace: 5,
+          gridColor: [50, 50, 50],
+        });
+
+        baseliner.toggle();
+    }
+  </script>
+  -->
+
+  <script>
+    anchors.options.placement = 'left';
+
+    anchors.add('.content h1');
+    anchors.add('.content h2');
+    anchors.add('.content h3');
+    anchors.add('.content h4');
+    anchors.add('.content h5');
+    anchors.add('.content h6');
+
+    anchors.add('.footnotes li');
+  </script>
+
+</body>
+</html>

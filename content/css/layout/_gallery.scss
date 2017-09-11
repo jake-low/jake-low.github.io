@@ -1,0 +1,58 @@
+@import 'base/constants';
+
+section.gallery {
+  grid-column: main;
+
+  display: flex;
+  flex-flow: row wrap;
+
+  & > * {
+    padding: 1px;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  figure {
+    position: relative;
+    overflow: hidden;
+
+    figcaption {
+      position: absolute;
+      bottom: 0;
+
+      width: 100%;
+
+      transform: translateY(100%);
+      transition: transform 0.25s;
+
+      p {
+        color: #aaa;
+        background-color: rgba(0.2, 0.2, 0.2, 0.5);
+        margin: 0;
+        padding: 0 1ch;
+
+        font-size: small;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    &:hover {
+      figcaption {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &::after {
+    // kind of a hack; prevents last row from getting awkwardly sized.
+    content: "";
+    flex-basis: 50%;
+    flex-grow: 5;
+  }
+}

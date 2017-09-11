@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render '/partials/meta.erb' %>
+</head>
+
+<body class='wide dark'>
+
+  <%= render '/partials/header.erb' %>
+
+  <main class='image-with-metadata'>
+    <figure>
+
+      <img src='<%= @item.path(rep: :default) %>'/>
+
+
+      <figcaption>
+        <% if @item[:title] %>
+        <p><em><%= @item[:title] %></em></p>
+        <% else %>
+          <p><em>Untitled</em></p>
+        <% end %>
+
+        <dl>
+          <dt><%= inline '/assets/icons/feather/map-pin.svg' %></dt>
+          <dd><%= @item[:location] %></dd>
+
+          <dt><%= inline '/assets/icons/feather/calendar.svg' %></dt>
+          <dd>
+            <time datetime='<%= @item[:date].strftime('%Y-%m-%d') %>'>
+              <%= @item[:date].strftime('%B %-d, %Y') %>
+            </time>
+          </dd>
+
+          <dt><%= inline '/assets/icons/feather/camera.svg' %></dt>
+          <dd>
+            <%= @item[:camera] %>
+            <% if @item[:lens] %>
+              with <%= @item[:lens] %>
+            <% end %>
+          </dd>
+
+          <dt><%= inline '/assets/icons/feather/sliders.svg' %></dt>
+          <dd>
+            ƒ/<%= @item[:aperture] %> &mdash;
+            <%= @item[:shutter_speed] %>s &mdash;
+            ISO <%= @item[:iso] %>
+          </dd>
+        </dl>
+      </figcaption>
+    </figure>
+
+  </main>
+
+</body>
+</html>

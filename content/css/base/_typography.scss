@@ -1,0 +1,247 @@
+@import 'base/constants';
+
+@function pow($number, $exponent) {
+  $value: 1;
+
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $value: $value * $number;
+    }
+  }
+
+  @return $value;
+}
+
+html {
+  &.wf-loading {
+    visibility: hidden;
+  }
+}
+
+/*
+section.content {
+  display: grid;
+  width: 100%;
+
+  grid-gap: $base-line-height;
+  grid-template-columns:
+    [full-start left-start] minmax(0, 1fr)
+    [left-end main-start] minmax(0, 75ch) [main-end right-start]
+    minmax(0, 1fr) [right-end full-end];
+
+  & > * {
+    grid-column: main;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+*/
+
+body {
+  color: $default-text-color;
+  background-color: #fff;
+
+  header,
+  nav,
+  menu {
+    a {
+      color: $default-text-color;
+    }
+
+    a:hover {
+      color: $accent-color;
+    }
+  }
+}
+
+body.dark {
+  color: #aaa;
+  background-color: #111;
+
+  header,
+  nav,
+  menu {
+    a {
+      color: #aaa;
+    }
+
+    a:hover {
+      color: $accent-color;
+    }
+  }
+}
+// endfixme
+
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+}
+
+a {
+  color: $accent-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $accent-color-dark;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Merriweather Sans', sans-serif;
+  // TODO Noto Serif?
+  font-weight: 300;
+  padding: 0;
+}
+
+$mobile-harmonic: 1.125; // major second
+$desktop-harmonic: 1.2; // minor third
+
+/*
+h1 { font-size: 1em * pow($mobile-harmonic, 6); line-height: $base-line-height * 2; }
+h2 { font-size: 1em * pow($mobile-harmonic, 5); line-height: $base-line-height * 2; }
+h3 { font-size: 1em * pow($mobile-harmonic, 4); line-height: $base-line-height * 2; }
+h4 { font-size: 1em * pow($mobile-harmonic, 3); line-height: $base-line-height * 2; }
+h5 { font-size: 1em * pow($mobile-harmonic, 2); line-height: $base-line-height * 2; }
+h6 { font-size: 1em * pow($mobile-harmonic, 1); line-height: $base-line-height * 2; }
+*/
+
+/*
+@media #{$larger-than-phablet} {
+  h1 { font-size: 1em * pow($desktop-harmonic, 6); line-height: $base-line-height * 2; }
+  h2 { font-size: 1em * pow($desktop-harmonic, 5); line-height: $base-line-height * 2; }
+  h3 { font-size: 1em * pow($desktop-harmonic, 4); line-height: $base-line-height * 2; }
+  h4 { font-size: 1em * pow($desktop-harmonic, 3); line-height: $base-line-height * 2; }
+  h5 { font-size: 1em * pow($desktop-harmonic, 2); line-height: $base-line-height * 2; }
+  h6 { font-size: 1em * pow($desktop-harmonic, 1); line-height: $base-line-height * 2; }
+}
+*/
+
+h1 {
+  font-size: 1em * pow($desktop-harmonic, 6);
+  line-height: $base-line-height * 2;
+}
+
+h2 {
+  font-size: 1em * pow($desktop-harmonic, 5);
+  line-height: $base-line-height * 2;
+}
+
+h3 {
+  font-size: 1em * pow($desktop-harmonic, 4);
+  line-height: $base-line-height * 2;
+}
+
+h4 {
+  font-size: 1em * pow($desktop-harmonic, 3);
+  line-height: $base-line-height * 2;
+}
+
+h5 {
+  font-size: 1em * pow($desktop-harmonic, 2);
+  line-height: $base-line-height * 2;
+}
+
+h6 {
+  font-size: 1em * pow($desktop-harmonic, 1);
+  line-height: $base-line-height * 2;
+}
+
+p, h1, h2, h3, h4, h5, h6, blockquote, hr, aside {
+  margin-top: $base-line-height;
+  margin-bottom: $base-line-height;
+}
+
+p {
+  padding: 0;
+  text-align: justify;
+}
+
+code, tt, pre {
+  font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: $line-color;
+}
+
+blockquote {
+  border-left: 0.1em solid $line-color;
+  color: #666;
+  padding: 0 1em;
+
+  @media #{$larger-than-phablet} {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
+// BEGIN HACKS
+
+article.essay > aside {
+  grid-column: main;
+  text-align: justify;
+
+  background-color: #fafafa;
+  border: 1px solid #eee;
+
+  padding: $base-line-height / 2;
+
+  font-size: 80%;
+  line-height: $base-line-height / 3 * 2;
+
+  * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  > * + * {
+    margin-top: $base-line-height / 2;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 162ch) { // FIXME magic number breakpoint
+article.essay:not(.preview) > aside {
+  grid-column: right;
+
+  height: 0;
+  padding: 0;
+  border: none;
+  background: none;
+
+  max-width: 40ch;
+
+  font-size: 70%;
+  line-height: $base-line-height / 2;
+  padding-top: $base-line-height / 4 + 1px; // looks better somehow
+
+  // FIXME no longer has rhythm, but more readable size
+  /*
+  font-size: 80%;
+  line-height: $base-line-height * 0.8;
+  padding-top: $base-line-height / 4;
+  */
+
+  * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  > * + * {
+    margin-top: $base-line-height / 2;
+    margin-bottom: 0;
+  }
+}
+}
+
+// END HACKS (optimism here)
+
+.footnotes {
+  p {
+    margin: 0;
+  }
+}
