@@ -95,7 +95,7 @@ sections:
       - philosophy
 
   - path: photographs
-    sort: -date
+    sort: -path
     paginate: false
 
   # TODO: should be able to iterate over site.sections ... how will this affect

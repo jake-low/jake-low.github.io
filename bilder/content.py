@@ -41,7 +41,19 @@ class ContentTarget(base.Target):
         self.template = jinja_env.get_template(str(template.relative_to('templates')))
 
     def is_stale(self):
-        return True # FIXME can we do better?
+        target = self.path
+        content = self.content.path
+        template = Path(self.template.filename)
+
+        if target.exists():
+            if content.stat().st_mtime <= target.stat().st_mtime and \
+                    template.stat().st_mtime <= target.stat().st_mtime:
+                return False
+            else:
+                self.path.unlink()
+                return True
+        else:
+            return True
 
     @property
     def path(self):
@@ -49,10 +61,16 @@ class ContentTarget(base.Target):
 
     @property
     def env(self):
-        return {
-            'site': self.content.config.data,
-            'page': self.content.data,
-        }
+        if isinstance(self.content, TextContentNode):
+            return {
+                'site': self.content.config.data,
+                'page': {**self.content.data, 'content': self.content.content}
+            }
+        else:
+            return {
+                'site': self.content.config.data,
+                'page': self.content.data,
+            }
 
 
 class TextContentNode(ContentNode):
@@ -143,13 +161,14 @@ class MarkdownContentNode(TextContentNode):
 class HTMLContentNode(TextContentNode):
     @property
     def excerpt(self):
-        tree = lxml.html.fromstring(self.raw_content)
-        sel = CSSSelector('p')
-        return lxml.etree.tostring(sel(tree)[0]).decode('utf8')
+        # tree = lxml.html.fromstring(self.raw_content)
+        # sel = CSSSelector('p')
+        # return lxml.etree.tostring(sel(tree)[0]).decode('utf8')
+        return ""
 
     @property
     def content(self):
-        return jinja_env.from_string(self.raw_content).render(site=self.config.data, page=self.data)
+        return self.raw_content
 
 class JPEGTarget(object):
     # TODO should derive from base.Target, which currently isn't generic enough
@@ -173,8 +192,6 @@ class JPEGTarget(object):
                 return True
         else:
             return True
-
-
 
     @property
     def path(self):
@@ -219,6 +236,7 @@ class JPEGContentNode(ContentNode):
     @property
     @memoize
     def frontmatter(self):
+        print('Crap! exifying {}'.format(self.path))
         cmd = 'exiftool -All -j {}'.format(self.path)
         output = subprocess.check_output(cmd.split(' '))
         return json.loads(output.decode('utf8'))[0]

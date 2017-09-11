@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import base
+import content
 
 import jinja2
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
@@ -12,7 +13,9 @@ class SectionNode(base.Node):
         self.pages = [page for page in pages
                  if page.section and page.section.startswith(self.name)]
 
-        sort = self.config.data['sections'][0]['sort'] # FIXME select correct section
+        section_config = next(c for c in self.config.data['sections'] if c['path'] == self.name)
+
+        sort = section_config['sort']
         reverse = False
 
         if sort[0] == '+':
@@ -68,10 +71,19 @@ class SectionTarget(base.Target):
         self.pages = pages
         self.template = jinja_env.get_template(str(template.relative_to('templates')))
 
-        print(section.name, [page.title for page in pages])
-
     def is_stale(self):
-        return True # FIXME can we do better?
+        target = self.path
+        template = Path(self.template.filename)
+
+        if target.exists():
+            if all(page.path.stat().st_mtime <= target.stat().st_mtime for page in self.pages) and \
+                    template.stat().st_mtime <= target.stat().st_mtime:
+                return False
+            else:
+                self.path.unlink()
+                return True
+        else:
+            return True
 
     @property
     def path(self):
@@ -91,16 +103,16 @@ class SectionTarget(base.Target):
 
     @property
     def paginator(self):
-        return {
-            'pages': [page.data for page in self.pages],
+        res = {
             'current_page': 1,
             'total_pages': 1,
         }
+        return res
 
     @property
     def env(self):
         return {
             'site': self.section.config.data,
             'page': self.data,
-            'paginator': self.paginator,
+            'paginator': {'pages': [page.data for page in self.pages], **self.paginator},
         }

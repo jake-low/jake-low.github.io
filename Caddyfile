@@ -1,0 +1,21 @@
+http://jakelow.com:80, http://www.jakelow.com:80, 
+https://jakelow.com:443, https://www.jakelow.com:443
+
+root /srv/www
+
+log stdout
+errors stderr {
+  404 assets/errors/404.html
+  451 assets/errors/451.html
+}
+
+gzip
+
+browse /
+
+tls self_signed
+
+redir 307 {
+  if {path} is /
+  / /photographs
+}

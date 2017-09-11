@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/jakelow
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://www.jakelow.com
+  * I am jakelow (https://keybase.io/jakelow) on keybase.
+  * I have a public key ASBPRVrv4XQRXkl38Q7ZVSn0ODXbUBIgdFwWVUZRrfSFRgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01204f455aefe174115e4977f10ed95529f43835db501220745c16554651adf485460a",
+      "host": "keybase.io",
+      "kid": "01204f455aefe174115e4977f10ed95529f43835db501220745c16554651adf485460a",
+      "uid": "d9e9353e28210360ae8cb8386e283e19",
+      "username": "jakelow"
+    },
+    "merkle_root": {
+      "ctime": 1501988751,
+      "hash": "bcb0baf96d029d7df1839948134e878b5efc9fa2d8f41efb33c20311e2a69554fc749289f15627b439950a6d39f81602423f7e6deaf734973305b7661ad8280b",
+      "hash_meta": "bd232108071e5cacb0a6834c6562e93f28c539aa4c90074321c16132ec16553f",
+      "seqno": 1307536
+    },
+    "service": {
+      "hostname": "www.jakelow.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.26"
+  },
+  "ctime": 1501988765,
+  "expire_in": 504576000,
+  "prev": "db8091d732aff02f53f9688dd02e111bb5d3b51e6c23284de15802698fc48d33",
+  "seqno": 15,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgT0Va7+F0EV5Jd/EO2VUp9Dg121ASIHRcFlVGUa30hUYKp3BheWxvYWTFA0d7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwNGY0NTVhZWZlMTc0MTE1ZTQ5NzdmMTBlZDk1NTI5ZjQzODM1ZGI1MDEyMjA3NDVjMTY1NTQ2NTFhZGY0ODU0NjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwNGY0NTVhZWZlMTc0MTE1ZTQ5NzdmMTBlZDk1NTI5ZjQzODM1ZGI1MDEyMjA3NDVjMTY1NTQ2NTFhZGY0ODU0NjBhIiwidWlkIjoiZDllOTM1M2UyODIxMDM2MGFlOGNiODM4NmUyODNlMTkiLCJ1c2VybmFtZSI6Impha2Vsb3cifSwibWVya2xlX3Jvb3QiOnsiY3RpbWUiOjE1MDE5ODg3NTEsImhhc2giOiJiY2IwYmFmOTZkMDI5ZDdkZjE4Mzk5NDgxMzRlODc4YjVlZmM5ZmEyZDhmNDFlZmIzM2MyMDMxMWUyYTY5NTU0ZmM3NDkyODlmMTU2MjdiNDM5OTUwYTZkMzlmODE2MDI0MjNmN2U2ZGVhZjczNDk3MzMwNWI3NjYxYWQ4MjgwYiIsImhhc2hfbWV0YSI6ImJkMjMyMTA4MDcxZTVjYWNiMGE2ODM0YzY1NjJlOTNmMjhjNTM5YWE0YzkwMDc0MzIxYzE2MTMyZWMxNjU1M2YiLCJzZXFubyI6MTMwNzUzNn0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJ3d3cuamFrZWxvdy5jb20iLCJwcm90b2NvbCI6Imh0dHBzOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4yNiJ9LCJjdGltZSI6MTUwMTk4ODc2NSwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsInByZXYiOiJkYjgwOTFkNzMyYWZmMDJmNTNmOTY4OGRkMDJlMTExYmI1ZDNiNTFlNmMyMzI4NGRlMTU4MDI2OThmYzQ4ZDMzIiwic2Vxbm8iOjE1LCJ0YWciOiJzaWduYXR1cmUifaNzaWfEQJqJ081b/1Cp4D9hno3xxVhAie7j4L4nv7u+DUj7TxYLz2YR7J5rAQMCu50Ln4IaBjQVo38jsUKBUnSkr/1sCwWoc2lnX3R5cGUgpGhhc2iCpHR5cGUIpXZhbHVlxCA3dYzBeTbnZBRFKGcTDifH9H17cx4Uw4DJXM6O2umEVKN0YWfNAgKndmVyc2lvbgE=
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/jakelow
+
+==================================================================

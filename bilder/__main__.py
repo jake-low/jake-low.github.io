@@ -57,9 +57,10 @@ for path in Path('content').glob('**/*.md'):
     print("Creating MarkDown node {}".format(str(path)))
     content_nodes.append(content.MarkdownContentNode(path))
 
-# for path in Path('content').glob('**/*.html'):
-#     content_nodes.append(content.HTMLContentNode(path))
-#
+for path in Path('content').glob('**/*.html'):
+    print("Creating HTML node {}".format(str(path)))
+    content_nodes.append(content.HTMLContentNode(path))
+
 for path in Path('content').glob('**/*.jpg'):
     print("Creating JPEG node {}".format(str(path)))
     content_nodes.append(content.JPEGContentNode(path))
