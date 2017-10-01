@@ -1,5 +1,9 @@
 <a href='<%= @item.path(rep: :default) %>'
-  style='flex-basis: <%= @item[:aspect] * 300 %>px; flex-grow: <%= @item[:aspect] %>; flex-shrink: <%= @item[:aspect] %>'>
+  style='
+        flex-basis: <%= @item[:aspect] * 300 %>px;
+        flex-grow: <%= @item[:aspect] * 10 %>;
+        flex-shrink: <%= @item[:aspect] * 10 %>
+        '>
   <figure>
     <img src='<%= @item.path(rep: :preview) %>'
       srcset='<%= @item.path(rep: :preview_2x) %> 2x'

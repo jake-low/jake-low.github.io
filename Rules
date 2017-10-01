@@ -6,7 +6,7 @@ require 'pp'
 
 preprocess do
   @items.each do |item|
-    if item.identifier.to_s =~ %r'/photographs/.*\.jpg'
+    if item.identifier.to_s =~ %r'/.*\.jpg'
       item.attributes.merge! pretty_exif(item.identifier.to_s)
 
     elsif item.identifier.to_s =~ %r'/essays/.*\.md'
@@ -20,12 +20,20 @@ preprocess do
       :root => 'essays',
       :per_page => 5,
       :sort_method => lambda {|a,b| b[:date] <=> a[:date]},
+      :file_ext => '.md',
     },
     {
       :root => 'photographs',
       :per_page => 25,
       :sort_method => lambda {|a,b| b[:date] <=> a[:date]},
+      :file_ext => '.jpg',
     },
+    # {
+    #   :root => 'postcards',
+    #   :per_page => 5,
+    #   :sort_method => lambda {|a,b| b[:date] <=> a[:date]},
+    #   :file_ext => '.md',
+    # },
   ]
 
   sectionize_config.each do |config|
@@ -39,7 +47,7 @@ preprocess do
     end
 
     sections.each do |section|
-      pages = @items.find_all("/#{section}/**/*")
+      pages = @items.find_all("/#{section}/**/*#{config[:file_ext]}")
         .sort(&config[:sort_method])
         .each_slice(config[:per_page])
         .to_a
@@ -69,10 +77,14 @@ preprocess do
   end
 end
 
+# SASS
+
 compile '/css/styles.scss' do
   filter :sass, syntax: :scss, load_paths: ['./content/css']
   write item.identifier.without_ext + '.css'
 end
+
+# ESSAYS
 
 if @config[:features][:essays]
   compile '/essays/page:*.html' do
@@ -82,23 +94,25 @@ if @config[:features][:essays]
   end
 
   compile '/essays/**/*.md' do
+    filter :erb
     filter :kramdown, :parse_block_html => true, :syntax_highlighter => 'rouge'
     layout '/essays/single.*'
     write ext: 'html'
   end
 end
 
-# compile '/photographs/index.html' do
-#   filter :erb
-#   layout '/photographs/section.*'
-#   write item.identifier.to_s
-# end
-#
-# compile '/photographs/favorites.html' do
-#   filter :erb
-#   layout '/photographs/section.*'
-#   write item.identifier.to_s
-# end
+compile '/essays/vietnam-in-pictures.md' do
+    filter :erb
+    filter :kramdown, :parse_block_html => true, :syntax_highlighter => 'rouge'
+    layout '/essays/single.*'
+    write ext: 'html'
+end
+
+compile '/essays/vnpix/*.jpg' do
+  write item.identifier.to_s
+end
+
+# PHOTOGRAPHS
 
 compile '/photographs/page:*.html' do
   layout '/photographs/section.*'
@@ -132,13 +146,43 @@ compile '/photographs/*.jpg', rep: :preview do
   write item.identifier.without_ext + '.preview.jpg'
 end
 
+# POSTCARDS
+
+compile '/postcards/page:*' do
+  layout '/postcards/section.*'
+  write item.identifier.to_s
+end
+
+compile '/postcards/**/*.jpg', rep: :at_2x do
+  filter :convert, size: 'x800', quality: 50
+  write item.identifier.without_ext + '@2x.jpg'
+end
+
+compile '/postcards/**/*.jpg', rep: :at_1x do
+  filter :convert, size: 'x400', quality: 50
+  write item.identifier.to_s
+end
+
+
+compile '/postcards/**/*.md' do
+  filter :kramdown
+end
+
 compile '/assets/errors/*.html' do
   layout '/assets/errors/single.*'
   write item.identifier.to_s
 end
 
-compile '/**/*' do
+compile '/assets/**/*' do
   write item.identifier.to_s
+end
+
+compile '/js/**/*' do
+  write item.identifier.to_s
+end
+
+compile '/**/*' do
+  nil
 end
 
 layout '/**/*', :erb

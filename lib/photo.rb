@@ -29,6 +29,11 @@ def pretty_exif (path)
   deduped_location = location.chunk{|e| e}.map(&:first)
   attributes[:location] = deduped_location.join ', '
 
+  attributes[:sublocation] = exif['Sub-location']
+  attributes[:city] = exif['City']
+  attributes[:province_state] = exif['Province-State']
+  attributes[:country] = exif['Country']
+
   attributes
 end
 
